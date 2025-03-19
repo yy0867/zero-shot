@@ -1,20 +1,10 @@
 import { cn } from "@/lib/shared/utils/utils";
 import { Button } from "@/lib/shared/components/button/Button";
-import { Loader, WandSparkles } from "lucide-react";
-import { useTransition } from "react";
-import { createWebsite } from "@/app/actions/website";
+import { WandSparkles } from "lucide-react";
 
 const InstructionForm = () => {
-  const [isSubmitting, startTransition] = useTransition();
-
-  const handleSubmit = async (formData: FormData) => {
-    startTransition(async () => {
-      await createWebsite(formData);
-    });
-  };
-
   return (
-    <form className={"flex w-full flex-col items-center"} action={handleSubmit}>
+    <form className={"flex w-full flex-col items-center"}>
       <div
         className={cn(
           "mt-8 w-full rounded-lg border border-gray-200 shadow-md",
@@ -33,10 +23,8 @@ const InstructionForm = () => {
             className={"hover:border-purple-300 hover:bg-purple-100 hover:text-purple-800"}
             variant={"outline"}
             size={"icon"}
-            disabled={isSubmitting}
           >
-            {!isSubmitting && <WandSparkles />}
-            {isSubmitting && <Loader />}
+            <WandSparkles />
           </Button>
         </div>
       </div>
