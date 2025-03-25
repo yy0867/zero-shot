@@ -1,5 +1,5 @@
 import InstructionForm from "@/app/ui/root/InstructionForm";
-import { cn } from "@/lib/shared/utils/utils";
+import { cn } from "@/lib/utils";
 
 const Page = () => {
   return (

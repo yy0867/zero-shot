@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR, Noto_Sans_Mono } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
-import { RootProviders } from "@/lib/shared/components/providers";
+import { RootProviders } from "@/lib/frontend/shared/components/providers";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import RootSidebar from "@/app/ui/sidebar/RootSidebar";
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-sans",
@@ -20,15 +22,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth,
 }: Readonly<{
   children: ReactNode;
+  auth: ReactNode;
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
       <body
-        className={`w-full h-full overflow-hidden ${notoSansKR.variable} ${notoSansMono.variable} font-sans antialiased`}
+        className={`h-full w-full overflow-hidden ${notoSansKR.variable} ${notoSansMono.variable} font-sans antialiased`}
       >
-        <RootProviders>{children}</RootProviders>
+        <RootProviders>
+          <SidebarProvider>
+            <RootSidebar />
+            <main className={"h-dvh w-full"}>{children}</main>
+          </SidebarProvider>
+          {auth}
+        </RootProviders>
       </body>
     </html>
   );

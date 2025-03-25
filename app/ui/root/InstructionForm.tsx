@@ -1,10 +1,18 @@
-import { cn } from "@/lib/shared/utils/utils";
-import { Button } from "@/lib/shared/components/button/Button";
-import { WandSparkles } from "lucide-react";
+import InstructionSubmitButton from "@/app/ui/root/InstructionSubmitButton";
+import { createProject } from "@/lib/backend/project/actions/website-actions";
+import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 const InstructionForm = () => {
+  const handleCreateProject = async (formData: FormData) => {
+    "use server";
+
+    const project = await createProject(formData);
+    redirect(`/project/${project.id}`);
+  };
+
   return (
-    <form className={"flex w-full flex-col items-center"}>
+    <form className={"flex w-full flex-col items-center"} action={handleCreateProject}>
       <div
         className={cn(
           "mt-8 w-full rounded-lg border border-gray-200 shadow-md",
@@ -12,20 +20,14 @@ const InstructionForm = () => {
         )}
       >
         <textarea
-          name={"description"}
+          name={"instruction"}
           className={"field-sizing-content max-h-[200px] w-full resize-none px-3 py-2.5 focus:outline-none"}
           placeholder={"웹사이트 설명과 디자인을 입력해주세요."}
           autoFocus
           required
         />
         <div className={"flex items-center justify-end p-2"}>
-          <Button
-            className={"hover:border-purple-300 hover:bg-purple-100 hover:text-purple-800"}
-            variant={"outline"}
-            size={"icon"}
-          >
-            <WandSparkles />
-          </Button>
+          <InstructionSubmitButton />
         </div>
       </div>
     </form>
